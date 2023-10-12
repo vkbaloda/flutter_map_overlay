@@ -23,6 +23,7 @@ class GoogleMapOptions {
     this.onCameraMove,
     this.onCameraIdle,
     this.onTap,
+    this.onLongPress,
   }) : assert(initialCameraPosition != null);
 
   final MapCreatedCallback onMapCreated;
@@ -88,6 +89,8 @@ class GoogleMapOptions {
 
   /// Called every time a [GoogleMap] is tapped.
   final ArgumentCallback<LatLng> onTap;
+
+  final ValueChanged<LatLng> onLongPress;
 
   /// True if a "My Location" layer should be shown on the map.
   ///

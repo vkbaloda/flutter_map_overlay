@@ -37,12 +37,22 @@ class _GoogleMapOverlayState extends State<GoogleMapOverlay> {
     if (update == null || update.bounds == null || update.position == null)
       return Container();
 
-    return Stack(
-      children: widget.overlays
-          .map((element) =>
-              element.build(context, update.bounds, update.position))
-          .where((item) => item != null)
-          .toList(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          children: widget.overlays
+              .map(
+                (e) => e.build(
+                  context,
+                  update.bounds,
+                  update.position,
+                  Size(constraints.maxWidth, constraints.maxHeight),
+                ),
+              )
+              .where((item) => item != null)
+              .toList(growable: false),
+        );
+      },
     );
   }
 
@@ -88,6 +98,7 @@ class _GoogleMapOverlayState extends State<GoogleMapOverlay> {
       onCameraMove: this.onCameraMove,
       onCameraIdle: widget.mapOptions.onCameraIdle,
       onTap: widget.mapOptions.onTap,
+      onLongPress: widget.mapOptions.onLongPress,
       initialCameraPosition: widget.mapOptions.initialCameraPosition,
     );
   }
